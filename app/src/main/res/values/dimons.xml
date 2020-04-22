@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--每个条目的尺寸-->
+    <dimen name="item_size">55dp</dimen>
+
+    <!--每个条目的字体的尺寸-->
+    <dimen name="item_text_size">16sp</dimen>
+</resources>

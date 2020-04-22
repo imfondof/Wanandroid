@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">玩安卓</string>
+    <string name="WanAndroid">WanAndroid</string>
+
+    <!--发现-->
+    <string name="wenda">问答</string>
+    <string name="square">广场</string>
+    <string name="more">更多</string>
+
+    <!--我的-->
+    <string name="jifen">积分</string>
+    <string name="settings">设置</string>
+    <string name="collect">收藏</string>
+    <string name="share">分享</string>
+</resources>
