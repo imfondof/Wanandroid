@@ -2,52 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/colorGray"
+    android:clickable="true"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/white">
+        android:background="@color/colorWhite">
 
         <TextView
+            android:id="@+id/to_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Imfondof"
+            android:text="请登录"
             android:textSize="20dp" />
 
     </RelativeLayout>
 
-    <TextView
-        style="@style/ItemTextViewStyle"
+    <RelativeLayout
+        android:id="@+id/rv_coin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/jifen" />
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ItemTextViewStyle"
+            android:clickable="false"
+            android:text="@string/jifen" />
+
+        <TextView
+            android:id="@+id/tv_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_size"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="36dp"
+            android:clickable="false"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textSize="15dp"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@color/colorWhite"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_share"
             style="@style/ItemTextViewStyle"
-            android:layout_marginTop="10dp"
             android:text="@string/share" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="10dp"
-            android:background="@color/gray" />
+            android:layout_height="0.8dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/colorGray" />
 
         <TextView
+            android:id="@+id/tv_collect"
             style="@style/ItemTextViewStyle"
             android:text="@string/collect" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_settings"
         style="@style/ItemTextViewStyle"
         android:layout_marginTop="10dp"
         android:text="@string/settings" />

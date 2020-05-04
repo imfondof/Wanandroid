@@ -4,12 +4,23 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
     <color name="blackMore">#191919</color>
-    <color name="gray">#ededed</color>
+    <color name="colorGray">#ededed</color>
     <color name="grayPressed">#d5d5d5</color>
     <color name="grayTab">#f7f7f7</color>
+
+    <!--水波纹或5.0以下选择器颜色-->
+    <color name="tabBackground">#777D7D7D</color>
+    <!--tab标签栏文字的颜色-->
+    <color name="colorTabText">#585858</color>
+    <!--正文文字颜色-->
+    <color name="colorContent">#ff333333</color>
+    <!--次级标题文字颜色  日期、类型、作者-->
+    <color name="colorTitleGray">#999999</color>
+    <!--item背景颜色-->
+    <color name="colorItemBac">#fafafa</color>
 
     <!--分割线-->
     <color name="colorLine">#EBEBEB</color>

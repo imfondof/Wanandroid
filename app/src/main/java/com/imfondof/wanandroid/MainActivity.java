@@ -1,6 +1,10 @@
 package com.imfondof.wanandroid;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,10 +15,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.imfondof.wanandroid.base.BaseActivity;
-import com.imfondof.wanandroid.ui.find.FindFragment;
-import com.imfondof.wanandroid.ui.gank.GankFragment;
-import com.imfondof.wanandroid.ui.mine.MineFragment;
-import com.imfondof.wanandroid.ui.wanandroid.WanAndroidFragment;
+import com.imfondof.wanandroid.ui.find.FindFrg;
+import com.imfondof.wanandroid.ui.gank.GankFrg;
+import com.imfondof.wanandroid.ui.mine.MineFrg;
+import com.imfondof.wanandroid.ui.wanandroid.WanAndroidFrg;
+import com.imfondof.wanandroid.utils.ToastUtil;
 import com.imfondof.wanandroid.view.TabView;
 
 import java.util.ArrayList;
@@ -33,7 +38,7 @@ public class MainActivity extends BaseActivity {
     private Toolbar mToolbar;
     private TabView mBtnWanAndroid, mBtnGank, mBtnFind, mBtnMine;
 
-    private List<String> mTitles = new ArrayList<>(Arrays.asList("玩安卓", "干货", "发现", "我"));
+    private List<String> mTitles = new ArrayList<>(Arrays.asList("安卓", "干货", "发现", "我"));
     private List<TabView> mTabs = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
@@ -92,8 +97,10 @@ public class MainActivity extends BaseActivity {
         mVpMain = findViewById(R.id.vp_main);
         mTvTitle = findViewById(R.id.tv_tb_title);
         mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mBtnWanAndroid = findViewById(R.id.tab_wanandroid);
-        mBtnGank = findViewById(R.id.tab_gank);
+        mBtnGank = findViewById(R.id.tab);
         mBtnFind = findViewById(R.id.tab_find);
         mBtnMine = findViewById(R.id.tab_mine);
 
@@ -107,10 +114,10 @@ public class MainActivity extends BaseActivity {
         mTabs.add(mBtnFind);
         mTabs.add(mBtnMine);
 
-        mFragments.add(WanAndroidFragment.newInstance());
-        mFragments.add(GankFragment.newInstance());
-        mFragments.add(FindFragment.newInstance());
-        mFragments.add(MineFragment.newInstance());
+        mFragments.add(WanAndroidFrg.newInstance());
+        mFragments.add(GankFrg.newInstance());
+        mFragments.add(FindFrg.newInstance());
+        mFragments.add(MineFrg.newInstance());
 
         setCurrentTab(mCurTabPos);
     }
@@ -140,4 +147,42 @@ public class MainActivity extends BaseActivity {
             });
         }
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        outState.putInt(BUNDLLE_KEY_POS, mVpMain.getCurrentItem());
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 不退出程序，进入后台
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ic_add:
+                ToastUtil.showToast("添加");
+                break;
+            case R.id.ic_find:
+                ToastUtil.showToast("查找");
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
 }

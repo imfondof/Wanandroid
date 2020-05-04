@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/find_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/colorGray"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_qa"
         style="@style/ItemTextViewStyle"
         android:text="@string/wenda" />
 
     <TextView
+        android:id="@+id/tv_square"
         style="@style/ItemTextViewStyle"
         android:layout_marginTop="10dp"
         android:text="@string/square" />
 
     <TextView
+        android:id="@+id/tv_welfare"
+        style="@style/ItemTextViewStyle"
+        android:layout_marginTop="10dp"
+        android:text="@string/welfare" />
+
+    <TextView
+        android:id="@+id/tv_more"
         style="@style/ItemTextViewStyle"
         android:layout_marginTop="10dp"
         android:text="@string/more" />

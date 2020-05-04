@@ -8,7 +8,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,4 +28,25 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'com.android.support:design:29.1.1'
+
+    // 网络请求
+    api 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'//okhttp日志打印
+
+    //工具
+    //下拉刷新、适配器adapter、图片glide
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.2'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    api "io.reactivex.rxjava2:rxjava:2.2.7" // 用于链式调用
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    // 高斯模糊和圆角等
+    implementation 'jp.wasabeef:glide-transformations:4.0.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
+
+    implementation files('libs/commons-lang-2.6.jar')
 }

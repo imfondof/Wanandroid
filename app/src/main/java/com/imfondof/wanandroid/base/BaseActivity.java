@@ -2,7 +2,6 @@ package com.imfondof.wanandroid.base;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.KeyEvent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         StatusBarUtil.transparentStatusbarAndLayoutInsert(this, isStatusbarLight());//默认设置背景为白色
-        StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.gray), true);
-
+        StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorGray), true);
     }
 
     public abstract void initView();
