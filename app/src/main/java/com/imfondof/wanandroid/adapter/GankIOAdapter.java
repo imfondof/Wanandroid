@@ -19,6 +19,10 @@ public class GankIOAdapter extends BaseQuickAdapter<GankIoDataBean.DataBean, Bas
         super(R.layout.item_gank_io, data);
     }
 
+    public GankIOAdapter() {
+        super(R.layout.item_gank_io);
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, GankIoDataBean.DataBean data) {
         helper.addOnClickListener(R.id.card_view);

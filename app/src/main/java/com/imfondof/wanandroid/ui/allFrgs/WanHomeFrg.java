@@ -2,7 +2,6 @@ package com.imfondof.wanandroid.ui.allFrgs;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -17,24 +16,19 @@ import com.imfondof.wanandroid.adapter.WanHomeAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanHomeListBean;
 import com.imfondof.wanandroid.http.HttpClient;
-import com.imfondof.wanandroid.utils.CollectUtils;
 import com.imfondof.wanandroid.view.webView.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WanHomeFrg extends BaseFragment {
-    private WanHomeAdapter mWanHomeAdapter;
+    private WanHomeAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private List<WanHomeListBean.DataBean.DatasBean> mDatas;
     private SmartRefreshLayout mRefreshLayout;
     private int page = 0;
 
@@ -66,16 +60,22 @@ public class WanHomeFrg extends BaseFragment {
         return R.layout.frg_wan_home;
     }
 
-    public void getData(int page) {
+    public void getData(final int page) {
         Call<WanHomeListBean> call = type == 0 ?
                 HttpClient.Builder.getWanAndroidService().getHomeList(page, null) :
                 HttpClient.Builder.getWanAndroidService().getProhectList(page);
         call.enqueue(new Callback<WanHomeListBean>() {
             @Override
             public void onResponse(Call<WanHomeListBean> call, Response<WanHomeListBean> response) {
-                if (response != null) {
-                    mDatas.addAll(response.body().getData().getDatas());
-                    mWanHomeAdapter.setNewData(mDatas);
+                if (response.body() != null
+                        && response.body().getData() != null
+                        && response.body().getData().getDatas() != null
+                        && response.body().getData().getDatas().size() > 0) {
+                    if (page == 0) {
+                        mAdapter.setNewData(response.body().getData().getDatas());
+                    } else {
+                        mAdapter.addData(response.body().getData().getDatas());
+                    }
                 }
             }
 
@@ -90,32 +90,18 @@ public class WanHomeFrg extends BaseFragment {
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
-        mDatas = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        mWanHomeAdapter = new WanHomeAdapter(mDatas);
-        mRecyclerView.setAdapter(mWanHomeAdapter);
-        mWanHomeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mAdapter = new WanHomeAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public boolean onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
                 if (view.getId() == R.id.article) {
-                    if (!TextUtils.isEmpty(mDatas.get(position).getLink())) {
-                        WebViewActivity.loadUrl(getActivity(), mDatas.get(position).getLink(), mDatas.get(position).getTitle());
+                    if (!TextUtils.isEmpty(mAdapter.getData().get(position).getLink())) {
+                        WebViewActivity.loadUrl(getActivity(), mAdapter.getData().get(position).getLink(), mAdapter.getData().get(position).getTitle());
                     }
                 }
-//                else if (view.getId() == R.id.vb_collect) {
-//                    CollectUtils.instance().collect(mDatas.get(position).getId(), new CollectUtils.OnCollectListener() {
-//                        @Override
-//                        public void onSuccess() {
-//                            mDatas.get(position).setCollect(mDatas.get(position).isCollect());
-//                        }
-//
-//                        @Override
-//                        public void onFailure() {
-//
-//                        }
-//                    });
-//                }
                 return true;
             }
         });
@@ -126,7 +112,6 @@ public class WanHomeFrg extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mDatas.clear();
                 getData(0);
                 mRefreshLayout.finishRefresh();
             }

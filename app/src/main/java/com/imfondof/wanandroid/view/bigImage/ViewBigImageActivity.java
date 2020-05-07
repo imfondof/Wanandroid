@@ -28,6 +28,7 @@ import com.bumptech.glide.request.target.Target;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.imfondof.wanandroid.R;
+import com.imfondof.wanandroid.base.App;
 import com.imfondof.wanandroid.utils.CheckNetwork;
 import com.imfondof.wanandroid.utils.PermissionHandler;
 import com.imfondof.wanandroid.utils.RxSaveImage;
@@ -104,7 +105,7 @@ public class ViewBigImageActivity extends FragmentActivity implements ViewPager.
             @Override
             public void onClick(View view) {
                 if (!CheckNetwork.isNetworkConnected(view.getContext())) {
-                    ToastUtil.showToastLong("当前网络不可用，请检查你的网络设置");
+                    ToastUtil.showToastLong(App.getInstance().getResources().getString(R.string.net_error));
                     return;
                 }
                 if (!PermissionHandler.isHandlePermission(ViewBigImageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {

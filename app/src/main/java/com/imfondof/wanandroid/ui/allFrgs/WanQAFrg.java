@@ -1,7 +1,6 @@
 package com.imfondof.wanandroid.ui.allFrgs;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.imfondof.wanandroid.R;
-import com.imfondof.wanandroid.adapter.WanHomeAdapter;
 import com.imfondof.wanandroid.adapter.WanQAAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanQABean;
@@ -21,9 +19,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +31,6 @@ import retrofit2.Response;
 public class WanQAFrg extends BaseFragment {
     private WanQAAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private List<WanQABean.DataBean.DatasBean> mDatas;
     private SmartRefreshLayout mRefreshLayout;
     int page = 0;
 
@@ -49,16 +43,15 @@ public class WanQAFrg extends BaseFragment {
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
-        mDatas = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        mAdapter = new WanQAAdapter(mDatas);
+        mAdapter = new WanQAAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public boolean onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!TextUtils.isEmpty(mDatas.get(position).getLink())) {
-                    WebViewActivity.loadUrl(getActivity(), mDatas.get(position).getLink(), mDatas.get(position).getTitle());
+                if (!TextUtils.isEmpty(mAdapter.getData().get(position).getLink())) {
+                    WebViewActivity.loadUrl(getActivity(), mAdapter.getData().get(position).getLink(), mAdapter.getData().get(position).getTitle());
                 }
                 return true;
             }
@@ -70,7 +63,6 @@ public class WanQAFrg extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mDatas.clear();
                 getData(0);
                 mRefreshLayout.finishRefresh();
             }
@@ -84,13 +76,21 @@ public class WanQAFrg extends BaseFragment {
         });
     }
 
-    private void getData(int page) {
+    private void getData(final int page) {
         Call<WanQABean> call = HttpClient.Builder.getWanAndroidService().getQA(page);
         call.enqueue(new Callback<WanQABean>() {
             @Override
             public void onResponse(Call<WanQABean> call, Response<WanQABean> response) {
-                mDatas.addAll(response.body().getData().getDatas());
-                mAdapter.setNewData(mDatas);
+                if (response.body() != null
+                        && response.body().getData() != null
+                        && response.body().getData().getDatas() != null
+                        && response.body().getData().getDatas().size() > 0) {
+                    if (page == 0) {
+                        mAdapter.setNewData(response.body().getData().getDatas());
+                    } else {
+                        mAdapter.addData(response.body().getData().getDatas());
+                    }
+                }
             }
 
             @Override

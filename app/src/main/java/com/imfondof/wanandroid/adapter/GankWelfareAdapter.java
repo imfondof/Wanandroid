@@ -17,6 +17,10 @@ public class GankWelfareAdapter extends BaseQuickAdapter<GankIoDataBean.DataBean
         super(R.layout.item_gank_welfare, data);
     }
 
+    public GankWelfareAdapter() {
+        super(R.layout.item_gank_welfare);
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, GankIoDataBean.DataBean data) {
         Glide.with(mContext)

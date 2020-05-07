@@ -5,6 +5,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.imfondof.wanandroid.R;
+import com.imfondof.wanandroid.base.App;
 import com.imfondof.wanandroid.bean.WanCollectArticleBean;
 import com.imfondof.wanandroid.utils.CollectUtils;
 import com.imfondof.wanandroid.utils.ToastUtil;
@@ -20,7 +21,10 @@ public class WanCollectArticleAdapter extends BaseQuickAdapter<WanCollectArticle
 
     public WanCollectArticleAdapter(List<WanCollectArticleBean.DataBean.DatasBean> data) {
         super(R.layout.item_wan_home_article, data);
-        mDatas = data;
+    }
+
+    public WanCollectArticleAdapter() {
+        super(R.layout.item_wan_home_article);
     }
 
     @Override
@@ -36,7 +40,7 @@ public class WanCollectArticleAdapter extends BaseQuickAdapter<WanCollectArticle
         helper.setOnClickListener(R.id.vb_collect, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CollectUtils.instance().unCollect(item.getId(),item.getOriginId(), new CollectUtils.OnCollectListener() {
+                CollectUtils.instance().unCollect(item.getId(), item.getOriginId(), new CollectUtils.OnCollectListener() {
                     @Override
                     public void onSuccess() {
                         mDatas.remove(item);
@@ -46,7 +50,7 @@ public class WanCollectArticleAdapter extends BaseQuickAdapter<WanCollectArticle
                     @Override
                     public void onFailure() {
                         helper.setChecked(R.id.vb_collect, true);
-                        ToastUtil.showToastLong("操作失败，请检查你的网络设置");
+                        ToastUtil.showToastLong(App.getInstance().getResources().getString(R.string.net_not_login_error));
                         notifyDataSetChanged();
                     }
                 });

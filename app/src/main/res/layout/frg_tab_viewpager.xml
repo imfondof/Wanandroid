@@ -9,8 +9,8 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab"
         android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        android:layout_height="38dp"
+        app:tabTextAppearance="@style/TabWidget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabBackground="?android:attr/selectableItemBackground"

@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.imfondof.wanandroid.R;
+import com.imfondof.wanandroid.base.App;
 import com.imfondof.wanandroid.bean.WanQABean;
 import com.imfondof.wanandroid.utils.CollectUtils;
 import com.imfondof.wanandroid.utils.StringUtils;
@@ -16,6 +17,10 @@ import java.util.List;
 public class WanQAAdapter extends BaseQuickAdapter<WanQABean.DataBean.DatasBean, BaseViewHolder> {
     public WanQAAdapter(List<WanQABean.DataBean.DatasBean> data) {
         super(R.layout.item_wan_qa, data);
+    }
+
+    public WanQAAdapter() {
+        super(R.layout.item_wan_qa);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class WanQAAdapter extends BaseQuickAdapter<WanQABean.DataBean.DatasBean,
 
                     @Override
                     public void onFailure() {
-                        ToastUtil.showToastLong("操作失败，请检查你的网络设置");
+                        ToastUtil.showToastLong(App.getInstance().getResources().getString(R.string.net_not_login_error));
                         item.setCollect(item.isCollect());
                         notifyDataSetChanged();
                     }

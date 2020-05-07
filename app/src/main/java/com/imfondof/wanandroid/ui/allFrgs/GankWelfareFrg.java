@@ -31,9 +31,8 @@ public class GankWelfareFrg extends BaseFragment {
     private SmartRefreshLayout mRefreshLayout;
     private ArrayList<String> imgList = new ArrayList<>();
     private ArrayList<String> imgTitleList = new ArrayList<>();
-    private ArrayList<GankIoDataBean.DataBean> mDatas = new ArrayList<>();
     private RecyclerView mRecyclerView;
-    GankWelfareAdapter mWelfareAdapter;
+    GankWelfareAdapter mAdapter;
     int page = 1;
 
     public static Fragment newInstance() {
@@ -48,14 +47,19 @@ public class GankWelfareFrg extends BaseFragment {
         return R.layout.frg_gank_welfare;
     }
 
-    public void getData(int page) {
+    public void getData(final int page) {
         Call<GankIoDataBean> call = HttpClient.Builder.getGankService().getGankIoData("Girl", "Girl", page, 10);
         call.enqueue(new Callback<GankIoDataBean>() {
             @Override
             public void onResponse(Call<GankIoDataBean> call, Response<GankIoDataBean> response) {
-                if (response.body().getData() != null) {
-                    mDatas.addAll(response.body().getData());
-                    mWelfareAdapter.setNewData(mDatas);
+                if (response.body() != null
+                        && response.body().getData() != null
+                        && response.body().getData().size() > 0) {
+                    if (page == 0) {
+                        mAdapter.setNewData(response.body().getData());
+                    } else {
+                        mAdapter.addData(response.body().getData());
+                    }
                 }
             }
 
@@ -70,18 +74,18 @@ public class GankWelfareFrg extends BaseFragment {
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
-        mWelfareAdapter = new GankWelfareAdapter(mDatas);
-        mRecyclerView.setAdapter(mWelfareAdapter);
+        mAdapter = new GankWelfareAdapter();
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setHasFixedSize(true);
-        mWelfareAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public boolean onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 imgList.clear();
                 imgTitleList.clear();
-                for (int i = 0; i < mDatas.size(); i++) {
-                    imgList.add(mDatas.get(i).getUrl());
-                    imgTitleList.add(mDatas.get(i).getTitle());
+                for (int i = 0; i < mAdapter.getData().size(); i++) {
+                    imgList.add(mAdapter.getData().get(i).getUrl());
+                    imgTitleList.add(mAdapter.getData().get(i).getTitle());
                 }
                 ViewBigImageActivity.startImageList(getContext(), position, imgList, imgTitleList);
                 return true;
@@ -94,7 +98,6 @@ public class GankWelfareFrg extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mDatas.clear();
                 getData(1);
                 mRefreshLayout.finishRefresh();
             }

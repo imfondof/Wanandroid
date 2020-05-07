@@ -2,7 +2,6 @@ package com.imfondof.wanandroid.ui.allFrgs;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -20,12 +19,7 @@ import com.imfondof.wanandroid.http.HttpClient;
 import com.imfondof.wanandroid.view.webView.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +28,6 @@ import retrofit2.Response;
 public class WanCollectSiteFrg extends BaseFragment {
     private WanCollectSiteAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private List<WanCollectSiteBean.DataBean> mDatas;
     private SmartRefreshLayout mRefreshLayout;
 
     public static Fragment newInstance() {
@@ -54,10 +47,10 @@ public class WanCollectSiteFrg extends BaseFragment {
         call.enqueue(new Callback<WanCollectSiteBean>() {
             @Override
             public void onResponse(Call<WanCollectSiteBean> call, Response<WanCollectSiteBean> response) {
-                if (response != null) {
-                    Collections.reverse(response.body().getData());
-                    mDatas.addAll(response.body().getData());
-                    mAdapter.setNewData(mDatas);
+                if (response.body() != null
+                        && response.body().getData() != null
+                        && response.body().getData().size() > 0) {
+                    mAdapter.setNewData(response.body().getData());
                 }
             }
 
@@ -72,16 +65,15 @@ public class WanCollectSiteFrg extends BaseFragment {
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
-        mDatas = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        mAdapter = new WanCollectSiteAdapter(mDatas);
+        mAdapter = new WanCollectSiteAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public boolean onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!TextUtils.isEmpty(mDatas.get(position).getLink())) {
-                    WebViewActivity.loadUrl(getActivity(), mDatas.get(position).getLink(), mDatas.get(position).getName());
+                if (!TextUtils.isEmpty(mAdapter.getData().get(position).getLink())) {
+                    WebViewActivity.loadUrl(getActivity(), mAdapter.getData().get(position).getLink(), mAdapter.getData().get(position).getName());
                 }
                 return true;
             }
@@ -94,7 +86,6 @@ public class WanCollectSiteFrg extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mDatas.clear();
                 getData();
                 mRefreshLayout.finishRefresh();
             }

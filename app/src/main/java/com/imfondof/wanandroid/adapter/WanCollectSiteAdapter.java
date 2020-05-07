@@ -12,6 +12,10 @@ public class WanCollectSiteAdapter extends BaseQuickAdapter<WanCollectSiteBean.D
         super(R.layout.item_wan_collect_site, data);
     }
 
+    public WanCollectSiteAdapter() {
+        super(R.layout.item_wan_collect_site);
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, WanCollectSiteBean.DataBean item) {
         helper.setText(R.id.tv_collect_site, item.getName());

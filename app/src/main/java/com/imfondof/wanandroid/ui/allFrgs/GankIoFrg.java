@@ -21,8 +21,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +38,6 @@ public class GankIoFrg extends BaseFragment {
     public static String TYPE_GIRL = "Girl";
 
     private SmartRefreshLayout mRefreshLayout;
-    private ArrayList<GankIoDataBean.DataBean> mDatas = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private GankIOAdapter mAdapter;
     int page = 1;
@@ -75,14 +72,18 @@ public class GankIoFrg extends BaseFragment {
         return R.layout.frg_refresh_recyclerview;
     }
 
-    public void getData(int page) {
-        Call<GankIoDataBean> call = HttpClient.Builder.getGankService().getGankIoData(category, type, page, 10);
-        call.enqueue(new Callback<GankIoDataBean>() {
+    public void getData(final int page) {
+        HttpClient.Builder.getGankService().getGankIoData(category, type, page, 10).enqueue(new Callback<GankIoDataBean>() {
             @Override
             public void onResponse(Call<GankIoDataBean> call, Response<GankIoDataBean> response) {
-                if (response.body().getData() != null) {
-                    mDatas.addAll(response.body().getData());
-                    mAdapter.setNewData(mDatas);
+                if (response.body() != null
+                        && response.body().getData() != null
+                        && response.body().getData().size() > 0) {
+                    if (page == 1) {
+                        mAdapter.setNewData(response.body().getData());
+                    } else {
+                        mAdapter.addData(response.body().getData());
+                    }
                 }
             }
 
@@ -96,15 +97,15 @@ public class GankIoFrg extends BaseFragment {
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
-        mAdapter = new GankIOAdapter(mDatas);
+        mAdapter = new GankIOAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public boolean onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!TextUtils.isEmpty(mDatas.get(position).getUrl())) {
-                    WebViewActivity.loadUrl(getActivity(), mDatas.get(position).getUrl(), mDatas.get(position).getTitle());
+                if (!TextUtils.isEmpty(mAdapter.getData().get(position).getUrl())) {
+                    WebViewActivity.loadUrl(getActivity(), mAdapter.getData().get(position).getUrl(), mAdapter.getData().get(position).getTitle());
                 }
                 return true;
             }
@@ -116,7 +117,6 @@ public class GankIoFrg extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mDatas.clear();
                 getData(1);
                 mRefreshLayout.finishRefresh();
             }

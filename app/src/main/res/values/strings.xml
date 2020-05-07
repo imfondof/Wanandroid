@@ -29,4 +29,8 @@
     <string name="actionbar_webview_open">浏览器打开</string>
     <string name="actionbar_webview_refresh">刷新</string>
     <string name="actionbar_webview_collect">添加到收藏</string>
+
+    //网络问题
+    <string name="net_error">当前网络不可用，请检查你的网络设置</string>
+    <string name="net_not_login_error">操作失败，请登录或检查你的网络设置</string>
 </resources>

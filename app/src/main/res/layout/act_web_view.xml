@@ -14,7 +14,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/title_tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="47dp"
         android:layout_below="@id/fakeStatusBar"
         android:background="@color/colorGray"
         app:contentInsetStartWithNavigation="0dp"

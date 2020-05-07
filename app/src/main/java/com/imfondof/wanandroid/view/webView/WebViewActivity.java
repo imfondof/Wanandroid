@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.imfondof.wanandroid.R;
+import com.imfondof.wanandroid.base.App;
 import com.imfondof.wanandroid.base.BaseActivity;
 import com.imfondof.wanandroid.utils.BaseTools;
 import com.imfondof.wanandroid.utils.CheckNetwork;
@@ -140,7 +141,7 @@ public class WebViewActivity extends BaseActivity implements IWebPageView {
 
                     @Override
                     public void onFailure() {
-                        ToastUtil.showToastLong("操作失败，请检查你的网络设置");
+                        ToastUtil.showToastLong(App.getInstance().getResources().getString(R.string.net_not_login_error));
                     }
                 });
 //                if (UserUtil.isLogin(webView.getContext())) {
@@ -290,7 +291,7 @@ public class WebViewActivity extends BaseActivity implements IWebPageView {
             intent.putExtra("mTitle", mTitle == null ? "" : mTitle);
             mContext.startActivity(intent);
         } else {
-            ToastUtil.showToastLong("当前网络不可用，请检查你的网络设置");
+            ToastUtil.showToastLong(App.getInstance().getResources().getString(R.string.net_error));
         }
     }
 

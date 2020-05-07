@@ -12,6 +12,10 @@ public class WanCoinDetailAdapter extends BaseQuickAdapter<WanCoinDetailBean.Dat
         super(R.layout.item_wan_coin_detail, data);
     }
 
+    public WanCoinDetailAdapter() {
+        super(R.layout.item_wan_coin_detail);
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, WanCoinDetailBean.DataBean.DatasBean item) {
         helper.setText(R.id.tv_reason, item.getReason());

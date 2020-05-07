@@ -18,6 +18,10 @@ public class WanCoinRankAdapter extends BaseQuickAdapter<WanCoinRankBean.DataBea
         super(R.layout.item_wan_coin_rank, data);
     }
 
+    public WanCoinRankAdapter() {
+        super(R.layout.item_wan_coin_rank);
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, WanCoinRankBean.DataBean.DatasBean item) {
         helper.setText(R.id.tv_rank, "" + item.getRank());

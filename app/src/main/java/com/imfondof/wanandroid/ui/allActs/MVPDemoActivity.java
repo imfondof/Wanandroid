@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import com.imfondof.wanandroid.R;
 import com.imfondof.wanandroid.constract.WanContract;
+import com.imfondof.wanandroid.impl.DemoPresenterImpl;
 import com.imfondof.wanandroid.mvp.BaseMVPActivity;
 
 public class MVPDemoActivity extends BaseMVPActivity<WanContract.View, WanContract.Presenter> implements WanContract.View {
@@ -27,7 +28,7 @@ public class MVPDemoActivity extends BaseMVPActivity<WanContract.View, WanContra
 
     @Override
     protected WanContract.Presenter createPresenter() {
-        return null;
+        return new DemoPresenterImpl();
     }
 
     @Override
