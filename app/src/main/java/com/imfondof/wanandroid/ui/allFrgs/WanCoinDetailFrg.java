@@ -3,6 +3,7 @@ package com.imfondof.wanandroid.ui.allFrgs;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import com.imfondof.wanandroid.adapter.WanCoinDetailAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanCoinDetailBean;
 import com.imfondof.wanandroid.http.HttpClient;
+import com.imfondof.wanandroid.http.HttpUtils;
 import com.imfondof.wanandroid.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -41,16 +43,23 @@ public class WanCoinDetailFrg extends BaseFragment {
         return R.layout.frg_refresh_recyclerview;
     }
 
+    @Override
+    protected void loadData() {
+        showLoading();
+        mRefreshLayout.autoRefresh();
+    }
+
     public void getData(final int page) {
         Call<WanCoinDetailBean> call = HttpClient.Builder.getWanAndroidService().getCoinDetail(page);
         call.enqueue(new Callback<WanCoinDetailBean>() {
             @Override
             public void onResponse(Call<WanCoinDetailBean> call, Response<WanCoinDetailBean> response) {
+                dissmissLoding();
                 if (response.body().getErrorCode() == 0) {
                     if (response.body() != null
                             && response.body().getData() != null
                             && response.body().getData().getDatas() != null
-                            && response.body().getData().getDatas().size() > 0) {
+                            && response.body().getData().getDatas().size() >= 0) {
                         if (page == 1) {
                             mAdapter.setNewData(response.body().getData().getDatas());
                         } else {
@@ -64,7 +73,7 @@ public class WanCoinDetailFrg extends BaseFragment {
 
             @Override
             public void onFailure(Call<WanCoinDetailBean> call, Throwable t) {
-
+                dissmissLoding();
             }
         });
     }
@@ -78,7 +87,6 @@ public class WanCoinDetailFrg extends BaseFragment {
         mAdapter = new WanCoinDetailAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mRefreshLayout = getView(R.id.refresh_layout);
-        getData(page);
 
         mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

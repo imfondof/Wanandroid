@@ -9,6 +9,7 @@ import com.imfondof.wanandroid.bean.WanCollectSiteBean;
 import com.imfondof.wanandroid.bean.WanHomeListBean;
 import com.imfondof.wanandroid.bean.WanLoginBean;
 import com.imfondof.wanandroid.bean.WanQABean;
+import com.imfondof.wanandroid.bean.WanShareArticleBean;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -130,6 +131,12 @@ public interface HttpClient {
     @FormUrlEncoded
     @POST("lg/uncollect/{id}/json")
     Call<WanHomeListBean> unCollect(@Path("id") int id, @Field("originId") int originId);
+
+    /**
+     * wanandroid收藏网址列表
+     */
+    @GET("user/lg/private_articles/{page}/json")
+    Call<WanShareArticleBean> getShareArticle(@Path("page") int page);
 
     /**
      * wanandroid收藏网址列表

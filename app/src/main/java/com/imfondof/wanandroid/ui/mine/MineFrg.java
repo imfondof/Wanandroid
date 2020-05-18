@@ -67,7 +67,11 @@ public class MineFrg extends BaseFragment {
                 }
                 break;
             case R.id.tv_share:
-                ToastUtil.showToast("敬请期待！");
+                if (UserUtils.isLogin()) {
+                    EmptyAct.jump(getActivity(), EmptyAct.WAN_SHARE_TYPE, EmptyAct.WAN_SHARE_TITLE);
+                } else {
+                    ToastUtil.showToast("请登录wanandroid");
+                }
                 break;
             case R.id.tv_settings:
                 ToastUtil.showToast("感谢wanandroid提供的接口；\n感谢gankio提供的接口；\n感谢开源项目cloudreader；\n敬请期待功能的完善！");

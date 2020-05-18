@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,17 +17,22 @@ import com.imfondof.wanandroid.adapter.WanCollectArticleAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanCollectArticleBean;
 import com.imfondof.wanandroid.http.HttpClient;
+import com.imfondof.wanandroid.http.HttpUtils;
 import com.imfondof.wanandroid.view.webView.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WanCollectArticleFrg extends BaseFragment {
+    List<WanCollectArticleBean.DataBean.DatasBean> mData;
     private WanCollectArticleAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private SmartRefreshLayout mRefreshLayout;
@@ -44,18 +50,28 @@ public class WanCollectArticleFrg extends BaseFragment {
         return R.layout.frg_refresh_recyclerview;
     }
 
+    @Override
+    protected void loadData() {
+        showLoading();
+        mRefreshLayout.autoRefresh();
+    }
+
     public void getData(final int page) {
         Call<WanCollectArticleBean> call = HttpClient.Builder.getWanAndroidService().getCollectArticle(page);
         call.enqueue(new Callback<WanCollectArticleBean>() {
             @Override
             public void onResponse(Call<WanCollectArticleBean> call, Response<WanCollectArticleBean> response) {
+                dissmissLoding();
                 if (response.body() != null
                         && response.body().getData() != null
                         && response.body().getData().getDatas() != null
-                        && response.body().getData().getDatas().size() > 0) {
+                        && response.body().getData().getDatas().size() >= 0) {
                     if (page == 0) {
+                        mData.clear();
+                        mData = response.body().getData().getDatas();
                         mAdapter.setNewData(response.body().getData().getDatas());
                     } else {
+                        mData.addAll(response.body().getData().getDatas());
                         mAdapter.addData(response.body().getData().getDatas());
                     }
                 }
@@ -63,7 +79,7 @@ public class WanCollectArticleFrg extends BaseFragment {
 
             @Override
             public void onFailure(Call<WanCollectArticleBean> call, Throwable t) {
-
+                dissmissLoding();
             }
         });
     }
@@ -72,9 +88,11 @@ public class WanCollectArticleFrg extends BaseFragment {
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
+        mRefreshLayout = getView(R.id.refresh_layout);
+        mData = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        mAdapter = new WanCollectArticleAdapter();
+        mAdapter = new WanCollectArticleAdapter(mData);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -85,8 +103,6 @@ public class WanCollectArticleFrg extends BaseFragment {
                 return true;
             }
         });
-        mRefreshLayout = getView(R.id.refresh_layout);
-        getData(page);
 
         mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

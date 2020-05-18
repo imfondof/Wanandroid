@@ -1,8 +1,8 @@
-package com.imfondof.wanandroid.impl;
+package com.imfondof.wanandroid.mvp.impl;
 
 import android.content.Context;
 
-import com.imfondof.wanandroid.constract.WanContract;
+import com.imfondof.wanandroid.mvp.constract.WanContract;
 
 public class DemoModelImpl implements WanContract.Model {
 

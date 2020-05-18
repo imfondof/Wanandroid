@@ -4,6 +4,7 @@
     android:id="@+id/tv_collect_site"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
     android:foreground="?attr/selectableItemBackgroundBorderless"
     android:padding="16dp"
     android:textColor="@color/colorContent"

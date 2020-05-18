@@ -10,10 +10,23 @@ android {
         versionCode 1
         versionName "0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {// // 设置支持的SO库架构
+            abiFilters "armeabi"
+        }
     }
     buildTypes {
         release {
+            shrinkResources true // 打开资源压缩
+            minifyEnabled true // 开启混淆操作
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // 关闭资源压缩以及混淆操作
+            shrinkResources false
             minifyEnabled false
+            zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

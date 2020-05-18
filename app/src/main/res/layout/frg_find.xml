@@ -8,12 +8,14 @@
 
     <TextView
         android:id="@+id/tv_qa"
+        android:visibility="gone"
         style="@style/ItemTextViewStyle"
         android:text="@string/wenda" />
 
     <TextView
         android:id="@+id/tv_square"
         style="@style/ItemTextViewStyle"
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:text="@string/square" />
 
@@ -21,7 +23,13 @@
         android:id="@+id/tv_welfare"
         style="@style/ItemTextViewStyle"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:text="@string/welfare" />
+
+    <TextView
+        android:id="@+id/tv_view"
+        style="@style/ItemTextViewStyle"
+        android:text="@string/view" />
 
     <TextView
         android:id="@+id/tv_more"

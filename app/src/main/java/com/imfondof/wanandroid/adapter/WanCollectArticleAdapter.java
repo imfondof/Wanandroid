@@ -21,6 +21,7 @@ public class WanCollectArticleAdapter extends BaseQuickAdapter<WanCollectArticle
 
     public WanCollectArticleAdapter(List<WanCollectArticleBean.DataBean.DatasBean> data) {
         super(R.layout.item_wan_home_article, data);
+        mDatas = data;
     }
 
     public WanCollectArticleAdapter() {

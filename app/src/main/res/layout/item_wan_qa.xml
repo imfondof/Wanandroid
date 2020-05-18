@@ -3,7 +3,7 @@
     android:id="@+id/article"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorItemBac"
+    android:background="@color/colorWhite"
     android:foreground="?attr/selectableItemBackgroundBorderless"
     android:paddingLeft="16dp"
     android:paddingRight="16dp">

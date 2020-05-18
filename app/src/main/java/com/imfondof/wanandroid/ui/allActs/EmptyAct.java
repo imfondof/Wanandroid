@@ -22,6 +22,7 @@ import com.imfondof.wanandroid.ui.allFrgs.WanCoinRankFrg;
 import com.imfondof.wanandroid.ui.allFrgs.WanCollectArticleFrg;
 import com.imfondof.wanandroid.ui.allFrgs.WanCollectSiteFrg;
 import com.imfondof.wanandroid.ui.allFrgs.WanQAFrg;
+import com.imfondof.wanandroid.ui.allFrgs.WanShareArticlesFrg;
 import com.imfondof.wanandroid.ui.allFrgs.WanSquareFrg;
 
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class EmptyAct extends BaseActivity {
     public static String WAN_COIN_TITLE = "积分系统";
     public static int WAN_COLLECT_TYPE = 1002;
     public static String WAN_COLLECT_TITLE = "收藏";
+    public static int WAN_SHARE_TYPE = 1003;
+    public static String WAN_SHARE_TITLE = "分享";
 
     private TextView titleTv;
     private Toolbar toolbar;
@@ -69,24 +72,21 @@ public class EmptyAct extends BaseActivity {
         mFragments.clear();
         switch (type) {
             case 2001:
-                mTitleList.add("问答");
                 mFragments.add(new WanQAFrg());
                 break;
             case 2002:
-                mTitleList.add("问答");
                 mFragments.add(GankWelfareFrg.newInstance());
                 break;
             case 2003:
-                mTitleList.add("广场");
                 mFragments.add(WanSquareFrg.newInstance());
                 break;
             case 1001:
                 line.setVisibility(View.VISIBLE);
                 tab.setVisibility(View.VISIBLE);
-                mTitleList.add("我的积分");
-                mFragments.add(WanCoinDetailFrg.newInstance());
                 mTitleList.add("积分排行榜");
                 mFragments.add(WanCoinRankFrg.newInstance());
+                mTitleList.add("我的积分");
+                mFragments.add(WanCoinDetailFrg.newInstance());
                 break;
             case 1002:
                 line.setVisibility(View.VISIBLE);
@@ -95,6 +95,9 @@ public class EmptyAct extends BaseActivity {
                 mFragments.add(WanCollectArticleFrg.newInstance());
                 mTitleList.add("网址");
                 mFragments.add(WanCollectSiteFrg.newInstance());
+                break;
+            case 1003:
+                mFragments.add(WanShareArticlesFrg.newInstance());
                 break;
             default:
                 return;

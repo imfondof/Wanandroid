@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,10 +15,11 @@ import com.imfondof.wanandroid.adapter.WanCollectSiteAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanCollectSiteBean;
 import com.imfondof.wanandroid.http.HttpClient;
+import com.imfondof.wanandroid.http.HttpUtils;
 import com.imfondof.wanandroid.view.webView.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,21 +42,29 @@ public class WanCollectSiteFrg extends BaseFragment {
         return R.layout.frg_refresh_recyclerview;
     }
 
+    @Override
+    protected void loadData() {
+        showLoading();
+        mRefreshLayout.autoRefresh();
+    }
+
     public void getData() {
         Call<WanCollectSiteBean> call = HttpClient.Builder.getWanAndroidService().getCollectSite();
         call.enqueue(new Callback<WanCollectSiteBean>() {
             @Override
             public void onResponse(Call<WanCollectSiteBean> call, Response<WanCollectSiteBean> response) {
+                dissmissLoding();
                 if (response.body() != null
                         && response.body().getData() != null
-                        && response.body().getData().size() > 0) {
+                        && response.body().getData().size() >= 0) {
+                    Collections.reverse(response.body().getData());
                     mAdapter.setNewData(response.body().getData());
                 }
             }
 
             @Override
             public void onFailure(Call<WanCollectSiteBean> call, Throwable t) {
-
+                dissmissLoding();
             }
         });
     }
@@ -79,16 +87,10 @@ public class WanCollectSiteFrg extends BaseFragment {
             }
         });
         mRefreshLayout = getView(R.id.refresh_layout);
-        getData();
 
-        mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
+        mRefreshLayout.setEnableRefresh(false);//是否启用下拉刷新功能
         mRefreshLayout.setEnableLoadMore(false);
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getData();
-                mRefreshLayout.finishRefresh();
-            }
-        });
+        mRefreshLayout.setNoMoreData(true);
+        mRefreshLayout.setEnableFooterFollowWhenNoMoreData(true);
     }
 }

@@ -16,6 +16,7 @@ import com.imfondof.wanandroid.adapter.WanHomeAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanHomeListBean;
 import com.imfondof.wanandroid.http.HttpClient;
+import com.imfondof.wanandroid.http.HttpUtils;
 import com.imfondof.wanandroid.view.webView.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -44,15 +45,22 @@ public class WanSquareFrg extends BaseFragment {
         return R.layout.frg_wan_home;
     }
 
+    @Override
+    protected void loadData() {
+        showLoading();
+        mRefreshLayout.autoRefresh();
+    }
+
     public void getData(final int page) {
         Call<WanHomeListBean> call = HttpClient.Builder.getWanAndroidService().getSquareArticle(page);
         call.enqueue(new Callback<WanHomeListBean>() {
             @Override
             public void onResponse(Call<WanHomeListBean> call, Response<WanHomeListBean> response) {
+                dissmissLoding();
                 if (response.body() != null
                         && response.body().getData() != null
                         && response.body().getData().getDatas() != null
-                        && response.body().getData().getDatas().size() > 0) {
+                        && response.body().getData().getDatas().size() >= 0) {
                     if (page == 0) {
                         mAdapter.setNewData(response.body().getData().getDatas());
                     } else {
@@ -63,7 +71,7 @@ public class WanSquareFrg extends BaseFragment {
 
             @Override
             public void onFailure(Call<WanHomeListBean> call, Throwable t) {
-
+                dissmissLoding();
             }
         });
     }
@@ -72,6 +80,7 @@ public class WanSquareFrg extends BaseFragment {
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
+        mRefreshLayout = getView(R.id.refresh_layout);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mAdapter = new WanHomeAdapter();
@@ -85,8 +94,6 @@ public class WanSquareFrg extends BaseFragment {
                 return true;
             }
         });
-        mRefreshLayout = getView(R.id.refresh_layout);
-        getData(page);
 
         mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

@@ -2,13 +2,13 @@ package com.imfondof.wanandroid.ui.find;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.imfondof.wanandroid.R;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.ui.allActs.EmptyAct;
+import com.imfondof.wanandroid.utils.ToastUtil;
 
 public class FindFrg extends BaseFragment {
 
@@ -31,6 +31,7 @@ public class FindFrg extends BaseFragment {
         getView(R.id.tv_welfare).setOnClickListener(this);
         getView(R.id.tv_square).setOnClickListener(this);
         getView(R.id.tv_more).setOnClickListener(this);
+        getView(R.id.tv_view).setOnClickListener(this);
     }
 
     @Override
@@ -44,6 +45,9 @@ public class FindFrg extends BaseFragment {
                 break;
             case R.id.tv_square:
                 EmptyAct.jump(getActivity(), EmptyAct.WAN_SQUARE_TYPE, EmptyAct.WAN_SQUARE_TITLE);
+                break;
+            case R.id.tv_view:
+                ToastUtil.showToast("自定义view");
                 break;
             default:
                 break;

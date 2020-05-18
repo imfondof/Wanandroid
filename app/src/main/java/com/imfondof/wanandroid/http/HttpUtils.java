@@ -26,6 +26,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpUtils {
+    public final static int WAN_PAGE_SIZE = 20;//wanandroid每页加载的数据有20条，用于判断有没有更多数据
 
     public final static String API_WAN_ANDROID = "https://www.wanandroid.com/";
     public final static String API_GANK = "https://gank.io/api/v2/";

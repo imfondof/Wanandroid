@@ -1,4 +1,4 @@
-package com.imfondof.wanandroid.constract;
+package com.imfondof.wanandroid.mvp.constract;
 
 import com.imfondof.wanandroid.mvp.IModel;
 import com.imfondof.wanandroid.mvp.IPresenter;

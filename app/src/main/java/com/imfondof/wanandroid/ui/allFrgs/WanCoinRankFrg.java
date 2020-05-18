@@ -2,6 +2,7 @@ package com.imfondof.wanandroid.ui.allFrgs;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.imfondof.wanandroid.adapter.WanCoinRankAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanCoinRankBean;
 import com.imfondof.wanandroid.http.HttpClient;
+import com.imfondof.wanandroid.http.HttpUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -39,15 +41,22 @@ public class WanCoinRankFrg extends BaseFragment {
         return R.layout.frg_refresh_recyclerview;
     }
 
+    @Override
+    protected void loadData() {
+        showLoading();
+        mRefreshLayout.autoRefresh();
+    }
+
     public void getData(final int page) {
         Call<WanCoinRankBean> call = HttpClient.Builder.getWanAndroidService().getCoinRank(page);
         call.enqueue(new Callback<WanCoinRankBean>() {
             @Override
             public void onResponse(Call<WanCoinRankBean> call, Response<WanCoinRankBean> response) {
+                dissmissLoding();
                 if (response.body() != null
                         && response.body().getData() != null
                         && response.body().getData().getDatas() != null
-                        && response.body().getData().getDatas().size() > 0) {
+                        && response.body().getData().getDatas().size() >= 0) {
                     if (page == 0) {
                         mAdapter.setNewData(response.body().getData().getDatas());
                     } else {
@@ -58,7 +67,7 @@ public class WanCoinRankFrg extends BaseFragment {
 
             @Override
             public void onFailure(Call<WanCoinRankBean> call, Throwable t) {
-
+                dissmissLoding();
             }
         });
     }
@@ -72,7 +81,6 @@ public class WanCoinRankFrg extends BaseFragment {
         mAdapter = new WanCoinRankAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mRefreshLayout = getView(R.id.refresh_layout);
-        getData(page);
 
         mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

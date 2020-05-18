@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -14,6 +15,7 @@ import com.imfondof.wanandroid.adapter.GankWelfareAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.GankIoDataBean;
 import com.imfondof.wanandroid.http.HttpClient;
+import com.imfondof.wanandroid.http.HttpUtils;
 import com.imfondof.wanandroid.view.bigImage.ViewBigImageActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -47,33 +49,17 @@ public class GankWelfareFrg extends BaseFragment {
         return R.layout.frg_gank_welfare;
     }
 
-    public void getData(final int page) {
-        Call<GankIoDataBean> call = HttpClient.Builder.getGankService().getGankIoData("Girl", "Girl", page, 10);
-        call.enqueue(new Callback<GankIoDataBean>() {
-            @Override
-            public void onResponse(Call<GankIoDataBean> call, Response<GankIoDataBean> response) {
-                if (response.body() != null
-                        && response.body().getData() != null
-                        && response.body().getData().size() > 0) {
-                    if (page == 0) {
-                        mAdapter.setNewData(response.body().getData());
-                    } else {
-                        mAdapter.addData(response.body().getData());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GankIoDataBean> call, Throwable t) {
-            }
-        });
+    @Override
+    protected void loadData() {
+        showLoading();
+        mRefreshLayout.autoRefresh();
     }
-
 
     @Override
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
+        mRefreshLayout = getView(R.id.refresh_layout);
         mAdapter = new GankWelfareAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
@@ -92,9 +78,7 @@ public class GankWelfareFrg extends BaseFragment {
             }
         });
 
-        mRefreshLayout = getView(R.id.refresh_layout);
-        getData(page);
-        mRefreshLayout.setEnableRefresh(false);//是否启用下拉刷新功能
+        mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -108,6 +92,30 @@ public class GankWelfareFrg extends BaseFragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 getData(++page);
                 mRefreshLayout.finishLoadMore();
+            }
+        });
+    }
+
+    public void getData(final int page) {
+        Call<GankIoDataBean> call = HttpClient.Builder.getGankService().getGankIoData("Girl", "Girl", page, 10);
+        call.enqueue(new Callback<GankIoDataBean>() {
+            @Override
+            public void onResponse(Call<GankIoDataBean> call, Response<GankIoDataBean> response) {
+                dissmissLoding();
+                if (response.body() != null
+                        && response.body().getData() != null
+                        && response.body().getData().size() >= 0) {
+                    if (page == 0) {
+                        mAdapter.setNewData(response.body().getData());
+                    } else {
+                        mAdapter.addData(response.body().getData());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GankIoDataBean> call, Throwable t) {
+                dissmissLoding();
             }
         });
     }

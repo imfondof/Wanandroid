@@ -73,7 +73,7 @@ public class WebViewActivity extends BaseActivity implements IWebPageView {
 
     private void initTitle() {
 //        StatusBarUtil.setColor(this, CommonUtils.getColor(R.color.colorTheme), 0);
-        StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorGray), true);
+        StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorWhite), true);
         webView = findViewById(R.id.webview_detail);
         mTitleToolBar = findViewById(R.id.title_tool_bar);
         tvGunTitle = findViewById(R.id.tv_gun_title);

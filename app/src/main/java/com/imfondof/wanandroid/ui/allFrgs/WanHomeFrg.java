@@ -1,10 +1,12 @@
 package com.imfondof.wanandroid.ui.allFrgs;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import com.imfondof.wanandroid.adapter.WanHomeAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanHomeListBean;
 import com.imfondof.wanandroid.http.HttpClient;
+import com.imfondof.wanandroid.http.HttpUtils;
 import com.imfondof.wanandroid.view.webView.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -60,36 +63,11 @@ public class WanHomeFrg extends BaseFragment {
         return R.layout.frg_wan_home;
     }
 
-    public void getData(final int page) {
-        Call<WanHomeListBean> call = type == 0 ?
-                HttpClient.Builder.getWanAndroidService().getHomeList(page, null) :
-                HttpClient.Builder.getWanAndroidService().getProhectList(page);
-        call.enqueue(new Callback<WanHomeListBean>() {
-            @Override
-            public void onResponse(Call<WanHomeListBean> call, Response<WanHomeListBean> response) {
-                if (response.body() != null
-                        && response.body().getData() != null
-                        && response.body().getData().getDatas() != null
-                        && response.body().getData().getDatas().size() > 0) {
-                    if (page == 0) {
-                        mAdapter.setNewData(response.body().getData().getDatas());
-                    } else {
-                        mAdapter.addData(response.body().getData().getDatas());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<WanHomeListBean> call, Throwable t) {
-
-            }
-        });
-    }
-
     @Override
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
+        mRefreshLayout = getView(R.id.refresh_layout);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mAdapter = new WanHomeAdapter();
@@ -105,8 +83,6 @@ public class WanHomeFrg extends BaseFragment {
                 return true;
             }
         });
-        mRefreshLayout = getView(R.id.refresh_layout);
-        getData(page);
 
         mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -121,6 +97,39 @@ public class WanHomeFrg extends BaseFragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 getData(++page);
                 mRefreshLayout.finishLoadMore();
+            }
+        });
+    }
+
+    @Override
+    protected void loadData() {
+        showLoading();
+        mRefreshLayout.autoRefresh();
+    }
+
+    public void getData(final int page) {
+        Call<WanHomeListBean> call = type == 0 ?
+                HttpClient.Builder.getWanAndroidService().getHomeList(page, null) :
+                HttpClient.Builder.getWanAndroidService().getProhectList(page);
+        call.enqueue(new Callback<WanHomeListBean>() {
+            @Override
+            public void onResponse(Call<WanHomeListBean> call, Response<WanHomeListBean> response) {
+                dissmissLoding();
+                if (response.body() != null
+                        && response.body().getData() != null
+                        && response.body().getData().getDatas() != null
+                        && response.body().getData().getDatas().size() >= 0) {
+                    if (page == 0) {
+                        mAdapter.setNewData(response.body().getData().getDatas());
+                    } else {
+                        mAdapter.addData(response.body().getData().getDatas());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WanHomeListBean> call, Throwable t) {
+                dissmissLoding();
             }
         });
     }

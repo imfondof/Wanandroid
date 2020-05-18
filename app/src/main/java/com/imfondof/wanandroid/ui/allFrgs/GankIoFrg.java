@@ -15,6 +15,7 @@ import com.imfondof.wanandroid.adapter.GankIOAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.GankIoDataBean;
 import com.imfondof.wanandroid.http.HttpClient;
+import com.imfondof.wanandroid.http.HttpUtils;
 import com.imfondof.wanandroid.view.webView.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -68,6 +69,12 @@ public class GankIoFrg extends BaseFragment {
     }
 
     @Override
+    protected void loadData() {
+        showLoading();
+        mRefreshLayout.autoRefresh();
+    }
+
+    @Override
     public int setContent() {
         return R.layout.frg_refresh_recyclerview;
     }
@@ -76,9 +83,10 @@ public class GankIoFrg extends BaseFragment {
         HttpClient.Builder.getGankService().getGankIoData(category, type, page, 10).enqueue(new Callback<GankIoDataBean>() {
             @Override
             public void onResponse(Call<GankIoDataBean> call, Response<GankIoDataBean> response) {
+                dissmissLoding();
                 if (response.body() != null
                         && response.body().getData() != null
-                        && response.body().getData().size() > 0) {
+                        && response.body().getData().size() >= 0) {
                     if (page == 1) {
                         mAdapter.setNewData(response.body().getData());
                     } else {
@@ -89,6 +97,7 @@ public class GankIoFrg extends BaseFragment {
 
             @Override
             public void onFailure(Call<GankIoDataBean> call, Throwable t) {
+                dissmissLoding();
             }
         });
     }
@@ -97,6 +106,7 @@ public class GankIoFrg extends BaseFragment {
     protected void initView() {
         super.initView();
         mRecyclerView = getView(R.id.recycler_view);
+        mRefreshLayout = getView(R.id.refresh_layout);
         mAdapter = new GankIOAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -110,9 +120,6 @@ public class GankIoFrg extends BaseFragment {
                 return true;
             }
         });
-
-        mRefreshLayout = getView(R.id.refresh_layout);
-        getData(page);
         mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

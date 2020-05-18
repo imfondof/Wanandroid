@@ -16,11 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="47dp"
         android:layout_below="@id/fakeStatusBar"
-        android:background="@color/colorGray"
+        android:background="@color/colorWhite"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_scrollFlags="enterAlways|scroll"
         app:navigationContentDescription="返回"
-        app:navigationIcon="@drawable/ic_back_black"
+        app:navigationIcon="@drawable/ic_close"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ToolbarStyle"
         app:titleMarginStart="0dp">
@@ -32,15 +32,24 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:textColor="@color/colorBlack"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"
             android:visibility="visible"
             tools:text="@string/app_name" />
     </androidx.appcompat.widget.Toolbar>
 
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.03dp"
+        android:background="#eeeeee"
+        android:layout_below="@id/title_tool_bar"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_tool_bar">
+        android:layout_below="@id/line">
 
         <WebView
             android:id="@+id/webview_detail"

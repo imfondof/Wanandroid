@@ -1,8 +1,8 @@
-package com.imfondof.wanandroid.impl;
+package com.imfondof.wanandroid.mvp.impl;
 
 import android.content.Context;
 
-import com.imfondof.wanandroid.constract.WanContract;
+import com.imfondof.wanandroid.mvp.constract.WanContract;
 import com.imfondof.wanandroid.mvp.BasePresenter;
 
 public class DemoPresenterImpl extends BasePresenter<WanContract.View, WanContract.Model> implements WanContract.Presenter {
