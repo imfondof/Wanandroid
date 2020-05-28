@@ -12,7 +12,7 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.mmkv.MMKV;
 
 public class App extends Application {
     private static App app;
@@ -26,6 +26,7 @@ public class App extends Application {
         super.onCreate();
         app = this;
         HttpUtils.getInstance().init(this);
+        MMKV.initialize(this);//初始化mmkv  mmkv是（类似于SharedPreferences）基于 mmap 内存映射的 key-value 组件
     }
 
     static {   //static 代码段可以防止内存泄露

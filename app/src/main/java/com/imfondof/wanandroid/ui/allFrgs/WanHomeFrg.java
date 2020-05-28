@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +17,7 @@ import com.imfondof.wanandroid.adapter.WanHomeAdapter;
 import com.imfondof.wanandroid.base.BaseFragment;
 import com.imfondof.wanandroid.bean.WanHomeListBean;
 import com.imfondof.wanandroid.http.HttpClient;
-import com.imfondof.wanandroid.http.HttpUtils;
+import com.imfondof.wanandroid.utils.SPUtils;
 import com.imfondof.wanandroid.view.webView.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -83,7 +82,16 @@ public class WanHomeFrg extends BaseFragment {
                 return true;
             }
         });
+        getLocalData();
+    }
 
+    private void getLocalData() {
+        WanHomeListBean data = SPUtils.getObjectCache("WanHomeFrg"+type, WanHomeListBean.class);
+        if (data != null
+                && data.getData() != null
+                && data.getData().getDatas() != null) {
+            mAdapter.setNewData(data.getData().getDatas());
+        }
         mRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -104,7 +112,7 @@ public class WanHomeFrg extends BaseFragment {
     @Override
     protected void loadData() {
         showLoading();
-        mRefreshLayout.autoRefresh();
+//        mRefreshLayout.autoRefresh();
     }
 
     public void getData(final int page) {
@@ -120,6 +128,7 @@ public class WanHomeFrg extends BaseFragment {
                         && response.body().getData().getDatas() != null
                         && response.body().getData().getDatas().size() >= 0) {
                     if (page == 0) {
+                        SPUtils.saveObjectCache("WanHomeFrg"+type, response.body());
                         mAdapter.setNewData(response.body().getData().getDatas());
                     } else {
                         mAdapter.addData(response.body().getData().getDatas());

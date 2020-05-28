@@ -3,12 +3,33 @@ package com.imfondof.wanandroid.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
 import com.imfondof.wanandroid.base.App;
+import com.tencent.mmkv.MMKV;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SPUtils {
+
+    public static Gson mGson;
+    MMKV kv = MMKV.defaultMMKV();
+
+    static {
+        mGson = new Gson();
+    }
+
+    public synchronized static void saveObjectCache(String key, Object obj) {
+        MMKV.defaultMMKV().encode(key, mGson.toJson(obj));
+    }
+
+    public static <T> T getObjectCache(String key, Class<T> classOfT) {
+        String gson = MMKV.defaultMMKV().decodeString(key, "");
+        if (gson == "" || gson.length() == 0) {
+            return null;
+        }
+        return mGson.fromJson(gson, classOfT);
+    }
 
     private static final String CONFIG = "config";
 
