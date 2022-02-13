@@ -5,23 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.imfondof.wanandroid.R;
-import com.imfondof.wanandroid.base.BaseActivity;
-import com.imfondof.wanandroid.bean.WanLoginBean;
-import com.imfondof.wanandroid.http.HttpClient;
-import com.imfondof.wanandroid.utils.SPUtils;
-import com.imfondof.wanandroid.utils.StatusBarUtil;
-import com.imfondof.wanandroid.utils.ToastUtil;
-import com.imfondof.wanandroid.utils.UserUtils;
+import com.imfondof.wanandroid.data.bean.WanLoginBean;
+import com.imfondof.wanandroid.data.http.HttpClient;
+import com.imfondof.wanandroid.other.utils.StatusBarUtil;
+import com.imfondof.wanandroid.other.utils.ToastUtil;
+import com.imfondof.wanandroid.other.utils.UserUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;

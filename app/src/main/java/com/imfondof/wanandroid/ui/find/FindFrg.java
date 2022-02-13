@@ -6,9 +6,9 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 
 import com.imfondof.wanandroid.R;
-import com.imfondof.wanandroid.base.BaseFragment;
-import com.imfondof.wanandroid.ui.allActs.EmptyAct;
-import com.imfondof.wanandroid.utils.ToastUtil;
+import com.imfondof.wanandroid.ui.base.BaseFragment;
+import com.imfondof.wanandroid.ui.base.EmptyAct;
+import com.imfondof.wanandroid.other.utils.ToastUtil;
 
 public class FindFrg extends BaseFragment {
 

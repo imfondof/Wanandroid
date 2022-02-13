@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".base.App"
+        android:name=".ui.base.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,21 +18,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.allActs.EmptyAct"></activity>
+        <activity android:name=".ui.base.EmptyAct"></activity>
         <activity android:name=".ui.mine.WanLoginAct" />
         <activity
-            android:name=".view.webView.WebViewActivity"
+            android:name=".other.view.webView.WebViewActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.bigImage.ViewBigImageActivity"
+            android:name=".other.view.bigImage.ViewBigImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ViewBigPicTheme" />
-        <activity android:name=".ui.allActs.MVPDemoActivity" />
+        <activity android:name=".other.mvp.MVPDemoActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/AppThemeNoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
