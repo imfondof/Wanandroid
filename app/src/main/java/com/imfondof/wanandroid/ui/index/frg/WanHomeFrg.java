@@ -1,22 +1,20 @@
-package com.imfondof.wanandroid.ui.index;
+package com.imfondof.wanandroid.ui.index.frg;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.imfondof.wanandroid.R;
-import com.imfondof.wanandroid.ui.base.BaseFragment;
 import com.imfondof.wanandroid.data.bean.WanHomeListBean;
 import com.imfondof.wanandroid.data.http.HttpClient;
 import com.imfondof.wanandroid.other.utils.SPUtils;
 import com.imfondof.wanandroid.other.view.webView.WebViewActivity;
+import com.imfondof.wanandroid.ui.base.BaseFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -84,7 +82,7 @@ public class WanHomeFrg extends BaseFragment {
     }
 
     private void getLocalData() {
-        WanHomeListBean data = SPUtils.getObjectCache("WanHomeFrg"+type, WanHomeListBean.class);
+        WanHomeListBean data = SPUtils.getObjectCache("WanHomeFrg" + type, WanHomeListBean.class);
         if (data != null
                 && data.getData() != null
                 && data.getData().getDatas() != null) {
@@ -126,7 +124,7 @@ public class WanHomeFrg extends BaseFragment {
                         && response.body().getData().getDatas() != null
                         && response.body().getData().getDatas().size() >= 0) {
                     if (page == 0) {
-                        SPUtils.saveObjectCache("WanHomeFrg"+type, response.body());
+                        SPUtils.saveObjectCache("WanHomeFrg" + type, response.body());
                         mAdapter.setNewData(response.body().getData().getDatas());
                     } else {
                         mAdapter.addData(response.body().getData().getDatas());

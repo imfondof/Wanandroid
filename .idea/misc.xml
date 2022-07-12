@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/drawable-v21/ic_menu_send.xml" value="0.212" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/drawable-v21/shape_ripple_tag_bg.xml" value="0.212" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/drawable/bg_item.xml" value="0.2155" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/drawable/bg_splash_window.xml" value="0.1065" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/drawable/shape_detail_mask.xml" value="0.166" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/drawable/shape_ripple_tag_bg.xml" value="0.212" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/act_test_data_binding.xml" value="0.1431159420289855" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/activity_category_detail.xml" value="0.17300724637681159" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/activity_empty.xml" value="0.17119565217391305" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/frg_find.xml" value="0.17119565217391305" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/frg_index.xml" value="0.11727456940222898" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/frg_mine.xml" value="0.17300724637681159" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/frg_refresh_recyclerview.xml" value="0.24114583333333334" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/frg_system.xml" value="0.17119565217391305" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/frg_wan_home.xml" value="0.17300724637681159" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/item_tree.xml" value="0.17300724637681159" />
+        <entry key="..\:/dev/work/git/wanandroid/imfondof/wanandroid/app/src/main/res/layout/layout_tree_tag.xml" value="0.17300724637681159" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

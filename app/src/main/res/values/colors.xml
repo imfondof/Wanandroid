@@ -4,12 +4,18 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="color_f7f7f7">#f7f7f7</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_999999">#999999</color>
+
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="blackMore">#191919</color>
     <color name="colorGray">#ededed</color>
     <color name="grayPressed">#d5d5d5</color>
     <color name="grayTab">#f7f7f7</color>
+    <color name="colorToolBar">#ffce3d3a</color>
+    <color name="color_sheet_bg">#ffffff</color>
 
     <!--水波纹或5.0以下选择器颜色-->
     <color name="tabBackground">#777D7D7D</color>

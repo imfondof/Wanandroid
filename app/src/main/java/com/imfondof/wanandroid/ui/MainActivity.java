@@ -19,7 +19,7 @@ import com.imfondof.wanandroid.ui.base.BaseActivity;
 import com.imfondof.wanandroid.ui.find.FindFrg;
 import com.imfondof.wanandroid.ui.system.SystemFrg;
 import com.imfondof.wanandroid.ui.mine.MineFrg;
-import com.imfondof.wanandroid.ui.index.WanAndroidFrg;
+import com.imfondof.wanandroid.ui.index.IndexFrg;
 import com.imfondof.wanandroid.other.utils.ToastUtil;
 import com.imfondof.wanandroid.other.view.TabView;
 
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
     private Toolbar mToolbar;
     private TabView mBtnWanAndroid, mBtnGank, mBtnFind, mBtnMine;
 
-    private List<String> mTitles = new ArrayList<>(Arrays.asList("安卓", "干货", "发现", "我"));
+    private List<String> mTitles = new ArrayList<>(Arrays.asList("安卓", "体系", "发现", "我"));
     private List<TabView> mTabs = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity {
         mTabs.add(mBtnFind);
         mTabs.add(mBtnMine);
 
-        mFragments.add(WanAndroidFrg.newInstance());
+        mFragments.add(IndexFrg.newInstance());
         mFragments.add(SystemFrg.newInstance());
         mFragments.add(FindFrg.newInstance());
         mFragments.add(MineFrg.newInstance());

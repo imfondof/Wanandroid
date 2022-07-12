@@ -3,6 +3,8 @@ package com.imfondof.wanandroid.ui.base;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.multidex.MultiDex;
+
 import com.imfondof.wanandroid.data.http.HttpUtils;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,6 +29,8 @@ public class App extends Application {
         app = this;
         HttpUtils.getInstance().init(this);
         MMKV.initialize(this);//初始化mmkv  mmkv是（类似于SharedPreferences）基于 mmap 内存映射的 key-value 组件
+
+        MultiDex.install(this);
     }
 
     static {   //static 代码段可以防止内存泄露

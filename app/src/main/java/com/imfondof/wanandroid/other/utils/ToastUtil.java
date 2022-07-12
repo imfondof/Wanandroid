@@ -32,7 +32,6 @@ public class ToastUtil {
                 mToast = ToastCompat.makeText(App.getInstance(), text, Toast.LENGTH_LONG);
             } else {
                 mToast.cancel();
-                mToast = ToastCompat.makeText(App.getInstance(), text, Toast.LENGTH_LONG);
             }
             mToast.setDuration(Toast.LENGTH_LONG);
             mToast.setText(text);

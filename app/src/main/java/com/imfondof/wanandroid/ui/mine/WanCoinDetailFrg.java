@@ -26,7 +26,7 @@ public class WanCoinDetailFrg extends BaseFragment {
     private WanCoinDetailAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private SmartRefreshLayout mRefreshLayout;
-    int page = 0;
+    int page = 1;
 
     public static Fragment newInstance() {
         Bundle bundle = new Bundle();
@@ -89,7 +89,7 @@ public class WanCoinDetailFrg extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getData(1);
+                getData(page);
                 mRefreshLayout.finishRefresh();
             }
         });

@@ -11,6 +11,7 @@ import com.imfondof.wanandroid.data.bean.WanHomeListBean;
 import com.imfondof.wanandroid.data.bean.WanLoginBean;
 import com.imfondof.wanandroid.data.bean.WanQABean;
 import com.imfondof.wanandroid.data.bean.WanShareArticleBean;
+import com.imfondof.wanandroid.ui.system.TreeBean;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -81,7 +82,7 @@ public interface HttpClient {
      * wanandroid问答模块
      */
     @GET("tree/json")
-    Call<SystemResult> getSystem();
+    Call<TreeBean> getSystem();
 
     /**
      * wanandroid积分

@@ -21,7 +21,7 @@ import com.imfondof.wanandroid.ui.mine.WanCollectArticleFrg;
 import com.imfondof.wanandroid.ui.mine.WanCollectSiteFrg;
 import com.imfondof.wanandroid.ui.find.WanQAFrg;
 import com.imfondof.wanandroid.ui.mine.WanShareArticlesFrg;
-import com.imfondof.wanandroid.ui.index.WanSquareFrg;
+import com.imfondof.wanandroid.ui.index.frg.WanSquareFrg;
 
 import java.util.ArrayList;
 

@@ -54,7 +54,7 @@ public class WanCoinRankFrg extends BaseFragment {
                         && response.body().getData() != null
                         && response.body().getData().getDatas() != null
                         && response.body().getData().getDatas().size() >= 0) {
-                    if (page == 0) {
+                    if (page == 1) {
                         mAdapter.setNewData(response.body().getData().getDatas());
                     } else {
                         mAdapter.addData(response.body().getData().getDatas());
@@ -83,7 +83,7 @@ public class WanCoinRankFrg extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getData(1);//积分是以第 1 页开始的
+                getData(page);//积分是以第 1 页开始的
                 mRefreshLayout.finishRefresh();
             }
         });

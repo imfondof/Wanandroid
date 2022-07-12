@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.imfondof.wanandroid.R;
-import com.imfondof.wanandroid.ui.base.BaseFragment;
 import com.imfondof.wanandroid.data.bean.WanQABean;
 import com.imfondof.wanandroid.data.http.HttpClient;
 import com.imfondof.wanandroid.other.view.webView.WebViewActivity;
+import com.imfondof.wanandroid.ui.base.BaseFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -26,7 +26,6 @@ import retrofit2.Response;
 /**
  * wanandroid 问答模块
  */
-
 public class WanQAFrg extends BaseFragment {
     private WanQAAdapter mAdapter;
     private RecyclerView mRecyclerView;

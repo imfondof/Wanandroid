@@ -1,4 +1,4 @@
-package com.imfondof.wanandroid.ui.index;
+package com.imfondof.wanandroid.ui.index.frg;
 
 import android.text.TextUtils;
 import android.view.View;
