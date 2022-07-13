@@ -52,7 +52,7 @@ class HttpLogInterceptor : Interceptor {
             try {
                 charset = contentType.charset(UTF8)
             } catch (e: UnsupportedCharsetException) {
-                Log.e(TAG, e.message)
+                e.message?.let { it1 -> Log.e(TAG, it1) }
             }
         }
         rBody = buffer.clone().readString(charset!!)

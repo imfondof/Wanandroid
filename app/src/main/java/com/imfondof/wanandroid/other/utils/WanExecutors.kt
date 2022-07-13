@@ -13,7 +13,7 @@ object WanExecutors {
     class MainThreadExecutor : Executor {
         private val handler = Handler(Looper.getMainLooper())
         override fun execute(command: Runnable?) {
-            handler.post(command)
+            command?.let { handler.post(it) }
         }
     }
 }

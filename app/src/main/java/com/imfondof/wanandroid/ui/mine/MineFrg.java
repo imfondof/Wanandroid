@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.imfondof.wanandroid.R;
+import com.imfondof.wanandroid.other.utils.EasyDataStore;
 import com.imfondof.wanandroid.ui.base.App;
 import com.imfondof.wanandroid.ui.base.BaseFragment;
 import com.imfondof.wanandroid.data.bean.WanCoinBean;
@@ -97,6 +98,7 @@ public class MineFrg extends BaseFragment {
 
     private void initUser() {
         coinTv = getView(R.id.tv_coin);
+        coinTv.setText(EasyDataStore.INSTANCE.getData("COIN_TEXT", ""));
         usernameTv = getView(R.id.to_login);
         if (UserUtils.isLogin()) {
             coinTv.setVisibility(View.VISIBLE);
@@ -106,8 +108,8 @@ public class MineFrg extends BaseFragment {
                 @Override
                 public void onResponse(Call<WanCoinBean> call, Response<WanCoinBean> response) {
                     if (response.body() != null && response.body().getData() != null) {
-                        coinTv.setText(response.body().getData().getCoinCount() + "  I  " + response.body().getData().getRank());
-
+                        EasyDataStore.INSTANCE.putData("COIN_TEXT", response.body().getData().getCoinCount() + "  I  " + response.body().getData().getRank());
+                        coinTv.setText(EasyDataStore.INSTANCE.getData("COIN_TEXT", ""));
                     }
                 }
 
