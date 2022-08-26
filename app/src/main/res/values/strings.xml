@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">玩安卓</string>
     <string name="WanAndroid">WanAndroid</string>
+    <string name="hello_world">hello_world</string>
 
     <!--登录-->
     <string name="wan_android_login">WanAndroid登录</string>

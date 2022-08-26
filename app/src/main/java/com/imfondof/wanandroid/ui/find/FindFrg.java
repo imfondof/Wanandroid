@@ -47,7 +47,7 @@ public class FindFrg extends BaseFragment {
                 EmptyAct.jump(getActivity(), EmptyAct.WAN_SQUARE_TYPE, EmptyAct.WAN_SQUARE_TITLE);
                 break;
             case R.id.tv_view:
-                ToastUtil.showToast("自定义view");
+                EmptyAct.jump(getActivity(), EmptyAct.VIEW_ANIM, EmptyAct.VIEW_ANIM_TITLE);
                 break;
             default:
                 break;

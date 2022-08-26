@@ -6,7 +6,7 @@ android {
     buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.imfondof.wanandroid"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "0.0.1"
@@ -84,4 +84,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation 'com.github.li-xiaojun:XPopup:2.3.6'
+    implementation 'com.github.li-xiaojun:XPopupExt:0.0.8'
 }

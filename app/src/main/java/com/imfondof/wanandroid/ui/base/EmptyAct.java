@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.imfondof.wanandroid.R;
+import com.imfondof.wanandroid.ui.find.AnimFrg;
 import com.imfondof.wanandroid.ui.system.other.GankWelfareFrg;
 import com.imfondof.wanandroid.ui.mine.WanCoinDetailFrg;
 import com.imfondof.wanandroid.ui.mine.WanCoinRankFrg;
@@ -47,6 +48,9 @@ public class EmptyAct extends BaseActivity {
     public static String WAN_COLLECT_TITLE = "收藏";
     public static int WAN_SHARE_TYPE = 1003;
     public static String WAN_SHARE_TITLE = "分享";
+
+    public static int VIEW_ANIM = 3001;
+    public static String VIEW_ANIM_TITLE = "动画";
 
     private TextView titleTv;
     private Toolbar toolbar;
@@ -96,6 +100,9 @@ public class EmptyAct extends BaseActivity {
                 break;
             case 1003:
                 mFragments.add(WanShareArticlesFrg.newInstance());
+                break;
+            case 3001:
+                mFragments.add(AnimFrg.newInstance());
                 break;
             default:
                 return;
